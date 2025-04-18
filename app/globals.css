@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+
+@theme inline {
+    --font-head: var(--font-rubik);
+}
