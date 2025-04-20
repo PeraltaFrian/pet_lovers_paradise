@@ -1,21 +1,54 @@
-Pet Lovers' Paradise Website:
+# Pet Lovers' Paradise Website:
 
-Phase 2:
+# Phase 3:
 
-In this phase of the project, the task was to build a responsive navigation component and implement routing to enhance the user experience with smooth and intuitive page transitions. Tailwind CSS was used to quickly create a responsive, mobile-friendly navigation design that adapts well to different screen sizes. The navigation bar provides easy access to key sections of the application, such as the home page, services, about, contacts, sign-in, sign-up, and user profile. A burger menu was implemented for smaller devices to improve usability and ensure that navigation remains clean and accessible on compact screens. To maintain consistency across the application, buttons, cards, and forms were modularized into reusable components, ensuring uniform styling and improving maintainability.
+- A web application designed for pet lovers to explore adoptable pets and book essential pet services. Built with Next.js 15, Clerk authentication, and a centralized state management system using Context API and useReducer.
 
-Routing between different pages was implemented efficiently. Route guards are used to secure restricted pages such as the user dashboard, profile, and pet adoption sections. If an unauthorized user attempts to access any of these restricted areas, they are automatically redirected to the login page. This approach ensures that restricted data remain protected, creating a more secure user experience. Dynamic routing was also integrated to display individual pet profiles based on their unique identifiers. For example, routes like /pet/:id allow the application to dynamically render pet details, enabling a more personalized experience for the user.
+## Technologies Used:
 
-Several challenges were encountered during this phase. Adjusting the layout for different screen sizes was initially tricky, as some elements would break or misalign on smaller screens. Implementing the burger menu required careful handling of state to ensure smooth opening and closing. Managing redirects based on user authentication required precise state handling to prevent infinite loops and broken navigation. Configuring dynamic routing to ensure the correct data was displayed upon route changes also required proper validation. Despite these challenges, this phase significantly improved the application's usability, security, and overall user experience by making it more responsive, intuitive, and dynamic.
+- **Next.js 15** (App Router, Client/Server Components)
+- **React** (Functional Components, Hooks)
+- **Clerk** (Authentication and User Management)
+- **Context API + useReducer** (Global State Management)
+- **Tailwind CSS** (Utility-First Styling)
+- **Vercel or onRender** (Deployment)
 
-Setup:
-1. Clone the repository
-    git clone https://github.com/Group2cprga/pet_lovers_paradise.git
-2. Install dependencies
-    npm install
-3. Start the app with:
-    npm run dev
-4. Go to http://localhost:3000 in your browser to view the site.
+## State Management
+
+- This project uses **Context API** with **useReducer** for managing shared global state across client components.
+
+### Managed State Includes:
+
+- `isMounted`: Tracks if the client-side has fully mounted to safely run client-only logic.
+- `petCards`: List of available pets for adoption.
+- `serviceCards`: List of available pet-related services.
+
+### How it works:
+
+- A custom `AppProvider` wraps the entire app in `layout.js`, making state accessible throughout the app.
+- Components like `Home` and `DashboardPage` use a custom `useAppContext` hook to access and update global state.
+- All state updates are triggered through a centralized reducer to ensure clean and predictable state transitions.
+
+# Phase 2:
+
+- In this phase of the project, the task was to build a responsive navigation component and implement routing to enhance the user experience with smooth and intuitive page transitions. Tailwind CSS was used to quickly create a responsive, mobile-friendly navigation design that adapts well to different screen sizes. The navigation bar provides easy access to key sections of the application, such as the home page, services, about, contacts, sign-in, sign-up, and user profile. A burger menu was implemented for smaller devices to improve usability and ensure that navigation remains clean and accessible on compact screens. To maintain consistency across the application, buttons, cards, and forms were modularized into reusable components, ensuring uniform styling and improving maintainability.
+
+- Routing between different pages was implemented efficiently. Route guards are used to secure restricted pages such as the user dashboard, profile, and pet adoption sections. If an unauthorized user attempts to access any of these restricted areas, they are automatically redirected to the login page. This approach ensures that restricted data remain protected, creating a more secure user experience. Dynamic routing was also integrated to display individual pet profiles based on their unique identifiers. For example, routes like /pet/:id allow the application to dynamically render pet details, enabling a more personalized experience for the user.
+
+- Several challenges were encountered during this phase. Adjusting the layout for different screen sizes was initially tricky, as some elements would break or misalign on smaller screens. Implementing the burger menu required careful handling of state to ensure smooth opening and closing. Managing redirects based on user authentication required precise state handling to prevent infinite loops and broken navigation. Configuring dynamic routing to ensure the correct data was displayed upon route changes also required proper validation. Despite these challenges, this phase significantly improved the application's usability, security, and overall user experience by making it more responsive, intuitive, and dynamic.
+
+## Setup:
+
+- 1. Clone the repository
+     git clone https://github.com/Group2cprga/pet_lovers_paradise.git
+
+- 2.  Install dependencies
+      npm install
+
+- 3. Start the app with:
+     npm run dev
+
+- 4. Go to http://localhost:3000 in your browser to view the site.
 
 Note: this requires environmental variables which is not uploaded to github
 
@@ -24,50 +57,50 @@ Live website link: https://pet-lovers-paradise.onrender.com/
 
 Updated Folder Structure:
 
-Folder Structure: 
+Folder Structure:
 /pets-website
-    /app
-        /about
-            page.jsx
-        /components
-            PetfForm.jsx
-            Card.jsx
-            FormField.jsx
-            PetCard.jsx
-            Button.jsx
-            Footer.jsx
-            header.jsx
-            NavBar.jsx
-        /contact
-            page.jsx
-        /dashboard
-            page.jsx
-        /profile
-            [[...rest]]
-                page.jsx
-        /pet
-            [id]
-                page.jsx
-        /sign-in
-            [[...sign-in]]
-                page.jsx
-        /sign-up
-            [[...sign-up]]
-                pages.jsx
-    /public
-        /assets
-            cat.jpg
-            cat2.jpg
-            dog.jpg
-            dog2.jpg
-            grooming.jpg
-            petcaregiver.jpg
-            rabbit.jpg
-            rabbit2.jpg
-            veterinary.jpg
-    globals.css
-    layout.tsx
-    page.tsx
+/app
+/about
+page.jsx
+/components
+PetfForm.jsx
+Card.jsx
+FormField.jsx
+PetCard.jsx
+Button.jsx
+Footer.jsx
+header.jsx
+NavBar.jsx
+/contact
+page.jsx
+/dashboard
+page.jsx
+/profile
+[[...rest]]
+page.jsx
+/pet
+[id]
+page.jsx
+/sign-in
+[[...sign-in]]
+page.jsx
+/sign-up
+[[...sign-up]]
+pages.jsx
+/public
+/assets
+cat.jpg
+cat2.jpg
+dog.jpg
+dog2.jpg
+grooming.jpg
+petcaregiver.jpg
+rabbit.jpg
+rabbit2.jpg
+veterinary.jpg
+globals.css
+layout.tsx
+page.tsx
 
 Technologies Used:
 Next.js (React framework)
@@ -77,18 +110,21 @@ Clerk (Authentication SDK)
 JavaScript (Programming language)
 
 Additional Functionality:
+
 1. The navigation bar was enhanced to display horizontally on desktop devices and use a burger menu on smaller devices. Icons were also added to improve readability and user experience.
 2. The contact page was enhanced by adding a dropdown list for "Reason for Contact" and auto-populating the user's name and email if the user is logged in, making the form more user-friendly.
 3. Input validations were implemented for fields such as email address, phone number, and message length, along with error prompts to guide users when their input is invalid.
 4. A new page was introduced for submitting adoption requests, enabling users to apply for adoption.
 
 Other Features Added:
+
 1. The routing configuration was enhanced to improve navigation and page transitions.
 2. Dynamic routing was added for the pet adoption request page, enabling users access pet details and submit adoption requests for specific pets.
 3. Route guards were implemented to redirect users to the login page when they attempt to access protected pages.
 4. Protected routes were defined to ensure that only authenticated users can access restricted sections of the application.
 
 Testing Instructions for Phase 2:
+
 1. Verify that the navigation bar is responsive and adjusts properly across different screen sizes.
 2. Confirm that routes are accessible through the navigation bar and lead to the correct pages.
 3. Confirm that the email address and user ID are auto-populated on the contact and adoption request pages if the user is logged in.
@@ -97,7 +133,8 @@ Testing Instructions for Phase 2:
 6. Test route guards by logging out and attempting to access protected pages, ensuring the user is redirected to the login page if they are not authenticated.
 7. Confirm that the application redirects unauthenticated users to the login page when attempting to access protected pages.
 
-------------------------------------------------------------------------------------------------------------------------------
+---
+
 Phase 1:
 
 Developing the Pet Lovers' Paradise website was an exciting journey that involved both challenges and valuable learning experiences. Our primary goal was to create a platform where pet lovers could easily adopt pets and access services like grooming, veterinary care, and caregiving, all while ensuring a user-friendly design and seamless user registration and sign-in authentication.
@@ -111,54 +148,54 @@ Throughout development, the main challenges we encountered were integrating thir
 Once the website was built, we conducted thorough testing to evaluate functionality, responsiveness, and user experience. Based on the test results we made adjustments to further improve both design and functionality.
 
 Setup:
+
 1. Clone the repository
-    git clone https://github.com/Group2cprga/pet_lovers_paradise.git
+   git clone https://github.com/Group2cprga/pet_lovers_paradise.git
 2. Install dependencies
-    npm install
+   npm install
 3. Start the app with:
-    npm run dev
+   npm run dev
 4. Go to http://localhost:3000 in your browser to view the site.
 
 To view the live website go to below link:
 Live website link: https://pet-lovers-paradise.onrender.com/
 
-
-Folder Structure: 
+Folder Structure:
 /pets-website
-    /app
-        /about
-            page.jsx
-        /component
-            Footer.jsx
-            header.jsx
-            NavBar.jsx
-        /contact
-            page.jsx
-        /dashboard
-            page.jsx
-        /profile
-            [[...rest]]
-                page.jsx
-        /sign-in
-            [[...sign-in]]
-                page.jsx
-        /sign-up
-            [[...sign-up]]
-                pages.jsx
-    /public
-        /assets
-            cat.jpg
-            cat2.jpg
-            dog.jpg
-            dog2.jpg
-            grooming.jpg
-            petcaregiver.jpg
-            rabbit.jpg
-            rabbit2.jpg
-            veterinary.jpg
-    globals.css
-    layout.tsx
-    page.tsx
+/app
+/about
+page.jsx
+/component
+Footer.jsx
+header.jsx
+NavBar.jsx
+/contact
+page.jsx
+/dashboard
+page.jsx
+/profile
+[[...rest]]
+page.jsx
+/sign-in
+[[...sign-in]]
+page.jsx
+/sign-up
+[[...sign-up]]
+pages.jsx
+/public
+/assets
+cat.jpg
+cat2.jpg
+dog.jpg
+dog2.jpg
+grooming.jpg
+petcaregiver.jpg
+rabbit.jpg
+rabbit2.jpg
+veterinary.jpg
+globals.css
+layout.tsx
+page.tsx
 
 Technologies Used:
 Next.js (React framework)
@@ -167,6 +204,7 @@ Clerk (Authentication SDK)
 JavaScript (Programming language)
 
 Functionality:
+
 1. The platform allows users to sign up with field validation and authentication.
 2. Users can sign in and sign out with proper validation.
 3. Users have the option to update their profile information.
@@ -178,6 +216,7 @@ Functionality:
 9. The platform is designed to be mobile, tablet, and desktop-friendly for a seamless experience across devices.
 
 Testing Instructions
+
 1. Test the sign-up process by entering valid and invalid data in the required fields.
 2. Ensure that proper validation occurs for required fields (First name, Last name, email, password) and that errors are shown for invalid input.
 3. Verify that a new user is successfully created upon valid submission and verification as well as directed to dashboard page.
