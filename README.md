@@ -6,12 +6,12 @@
 
 ## Technologies Used:
 
-- **Next.js 15** (App Router, Client/Server Components)
-- **React** (Functional Components, Hooks)
-- **Clerk** (Authentication and User Management)
-- **Context API + useReducer** (Global State Management)
-- **Tailwind CSS** (Utility-First Styling)
-- **Vercel or onRender** (Deployment)
+- Next.js 15 (App Router, Client/Server Components)
+- React (Functional Components, Hooks)
+- Clerk (Authentication and User Management)
+- Context API + useReducer (Global State Management)
+- Tailwind CSS (Utility-First Styling)
+- Vercel or onRender(Deployment)
 
 ## State Management
 
