@@ -2,16 +2,123 @@
 
 # Phase 3:
 
-- A web application designed for pet lovers to explore adoptable pets and book essential pet services. Built with Next.js 15, Clerk authentication, and a centralized state management system using Context API and useReducer.
+- At this point in the project, we’ve developed an enhanced interactive and user-friendly dashboard tailored for pet lovers. The goal from the beginning was to create an experience where users could explore adoptable pets and easily book essential pet care services. We started by integrating Clerk for user authentication, which allowed us to personalize the dashboard with user-specific greetings and secure access to registered user features. The dashboard UI was built using Tailwind CSS, enabling a responsive and clean layout that includes sections for adoptable pet cards and service offerings. These cards were designed with hover effects and call-to-action buttons to enhance user interaction.
+
+- As part of the booking experience, we embedded Calendly to allow users to schedule services directly from the dashboard. We implemented a floating calendar widget that appears as a bouncing icon in the corner, complete with a tooltip for clarity. When users click a “Book Now” button on a service card, the booking modal opens and dynamically passes their name and the selected service type into the Calendly URL for a personalized booking experience. While Calendly doesn’t allow pre-filling the email field due to security limitations, we were able to pass the user's full name and service type successfully.
+
+- We used a centralized state management system using Context API and useReducer to manage the state of pet and service cards throughout the application. Along the way, we encountered some challenges—such as limitations in Calendly’s URL parameter support, but we adapted and implemented features that preserved a smooth user experience. We also modularized the reusable components to maintain a scalable and maintainable codebase.
+
+- In conclusion, this project successfully brings together a seamless user experience, efficient state management, and an intuitive UI. The dashboard is not only functional but also designed with user in mind. The journey of building this project has been rewarding.
+
+## Setup:
+
+- 1. Clone the repository
+     git clone https://github.com/PeraltaFrian/pet_lovers_paradise.git
+
+- 2.  Install dependencies
+      npm install
+
+- 3. Start the app with:
+     npm run dev
+
+- 4. Go to http://localhost:3000 in your browser to view the site.
+
+Note: this requires environmental variables which is not uploaded to github
+
+To view the live website go to below link:
+Live website link: https://pet-lovers-paradise-ari9.onrender.com
+
+## Updated Folder Structure:
+
+Folder Structure:
+   /app
+   /about
+      page.jsx
+   /components
+      BookingWidgetButton.jsx
+      CalBookingModal.jsx
+      PetfForm.jsx
+      Card.jsx
+      FormField.jsx
+      PetCard.jsx
+      Button.jsx
+      Footer.jsx
+      header.jsx
+      NavBar.jsx
+   /contact
+      page.jsx
+   /dashboard
+      page.jsx
+   /profile
+      [[...rest]]
+         page.jsx
+   /pet
+      [id]
+         page.jsx
+   /sign-in
+      [[...sign-in]]
+         page.jsx
+   /sign-up
+      [[...sign-up]]
+      pages.jsx
+   /public
+      /assets
+      cat.jpg
+      cat2.jpg
+      dog.jpg
+      dog2.jpg
+      grooming.jpg
+      petcaregiver.jpg
+      rabbit.jpg
+      rabbit2.jpg
+      veterinary.jpg
+      globals.css
+      layout.tsx
+      page.tsx
 
 ## Technologies Used:
 
-- Next.js 15 (App Router, Client/Server Components)
+- Next.js (App Router, Client/Server Components)
 - React (Functional Components, Hooks)
 - Clerk (Authentication and User Management)
 - Context API + useReducer (Global State Management)
 - Tailwind CSS (Utility-First Styling)
-- Vercel or onRender(Deployment)
+- Heroicons and Lucide-react (icons)
+- Framer Motion (Animation)
+- Calendly (Booking Integration)
+- Render(Deployment)
+
+## Functions:
+1. User Authentication with Clerk
+2. Dashboard 
+   - View adorable pets for adoption
+   - Explore pet services (grooming, veterinary, caregiver)
+3. Submit Feedback or Enquiry via Contact us (Auto populate name and email if user is log-in)
+4. Submit adoption request (Auto populate name and email if user is log-in)
+5. Booking of pet service (Auto populate name and service type)
+
+## Additional Features:
+- Users are able to book appointments using the animated calendar button (Floating Booking Widget) or by clicking the “Book Now” button under available services.
+- Centralized state management using React Context API and useReducer.
+- Fully responsive design with smooth animations and interactive icons to enhance the user experience.
+
+## Test Instructions
+1. Sign In / Sign Up using Clerk
+      - Ensure authentication works and redirects properly after sign-in.
+2. Profile Information
+   - Upload a profile picture.
+   - Update your password, username, first name, and last name.
+   - Confirm that changes are reflected in the dashboard.
+3. Explore the Dashboard
+   - Navigate through the dashboard to view adoptable pets and available services.
+   - Confirm responsive design and smooth interactions.
+4. Test other pages
+   - Go to the Contact or Adoption Request page. If logged in, verify that the email address and user ID are auto-populated.
+5. Test the “Book Now” Button and Floating Calendar Icon
+   - Click on the “Book Now” button from any service card or use the floating calendar widget.
+   - Verify that the Calendly booking modal opens.
+   - Confirm that the user’s name and selected service are correctly passed and displayed in Calendly.
+   - Test the booking flow: Make a booking -> Confirm receipt of a booking confirmation email -> Attempt rescheduling and cancellation using the email link.
 
 ## State Management
 
@@ -28,6 +135,8 @@
 - A custom `AppProvider` wraps the entire app in `layout.js`, making state accessible throughout the app.
 - Components like `Home` and `DashboardPage` use a custom `useAppContext` hook to access and update global state.
 - All state updates are triggered through a centralized reducer to ensure clean and predictable state transitions.
+
+---
 
 # Phase 2:
 
