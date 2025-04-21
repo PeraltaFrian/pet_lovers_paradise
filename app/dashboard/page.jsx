@@ -1,17 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import Card from "../components/Card";
 import { useAppContext } from "../store";
+import CalBookingModal from "../components/CalBookingModal";
+import BookingWidgetButton from "../components/BookingWidgetButton"; 
 
 const DashboardPage = () => {
   const { isSignedIn, user } = useUser();
-  const {state} = useAppContext();
-  const { petCards, serviceCards} = state;
-
-
+  const { state } = useAppContext();
+  const { petCards, serviceCards } = state;
+  const [showBooking, setShowBooking] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
 
   if (!isSignedIn) {
     return (
@@ -57,7 +59,7 @@ const DashboardPage = () => {
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
         {petCards.map((pet) => (
-          <Link key={pet.id} href={`/pet/${pet.id}`}> 
+          <Link key={pet.id} href={`/pet/${pet.id}`}>
             <Card
               imageSrc={pet.imageSrc}
               altText={pet.altText}
@@ -82,9 +84,24 @@ const DashboardPage = () => {
             title={service.title}
             description={service.description}
             buttonText={service.buttonText}
+            onClick={() => {
+              setSelectedService(service.title); 
+              setShowBooking(true); 
+            }}
           />
         ))}
       </section>
+
+      {/* Floating Booking Button */}
+      <BookingWidgetButton onClick={() => setShowBooking(true)} />
+
+      {/* Modal */}
+      {showBooking && (
+        <CalBookingModal
+          onClose={() => setShowBooking(false)}
+          serviceType={selectedService} 
+        />
+      )}
     </main>
   );
 };
