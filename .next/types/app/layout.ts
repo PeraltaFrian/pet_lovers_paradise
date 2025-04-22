@@ -1,4 +1,4 @@
-// File: /Users/rachel/Documents/web-work-space/pet_lovers_paradise/app/layout.js
+// File: /Users/uwu/Documents/GitHub/pet_lovers_paradise2/app/layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

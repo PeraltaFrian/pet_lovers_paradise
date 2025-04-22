@@ -2,6 +2,10 @@
 
 import { UserProfile, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";  
+import Image from "next/image";
+import Avatar from "@/app/components/Avatar";
+import Animaltar from "@/app/components/Animaltar";
+
 
 const ProfilePage = () => {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -25,6 +29,7 @@ const ProfilePage = () => {
             <h2 className="text-4xl font-semibold text-teal-600 mb-4">
               Welcome, {user.firstName} {user.lastName}!
             </h2>
+            <Animaltar className="flex-wrap"/>
             <p className="text-lg text-gray-500">Your pets are happy to have you!</p>
           </section>
 
