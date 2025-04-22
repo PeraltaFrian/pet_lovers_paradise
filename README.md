@@ -1,15 +1,19 @@
 # Pet Lovers' Paradise Website:
 
 # Phase 3:
+
 At this point in the project, we’ve developed an enhanced interactive and user-friendly dashboard tailored for pet lovers. The goal from the beginning was to create an experience where users could explore adoptable pets and easily book essential pet care services. We started by integrating Clerk for user authentication, which allowed us to personalize the dashboard with user-specific greetings and secure access to registered user features. The dashboard UI was built using Tailwind CSS, enabling a responsive and clean layout that includes sections for adoptable pet cards and service offerings. These cards were designed with hover effects and call-to-action buttons to enhance user interaction.
 
 As part of the booking experience, we embedded Calendly to allow users to schedule services directly from the dashboard. We implemented a floating calendar widget that appears as a bouncing icon in the corner, complete with a tooltip for clarity. When users click a “Book Now” button on a service card, the booking modal opens and dynamically passes their name and the selected service type into the Calendly URL for a personalized booking experience. While Calendly doesn’t allow pre-filling the email field due to security limitations, we were able to pass the user's full name and service type successfully.
+
+To enhance the experience, we integrated the Calendly API to fetch real-time booking data, allowing users to view all their events directly in the dashboard. We handled API pagination to ensure all bookings were fetched, and enriched each event with invitee details. 
 
 We used a centralized state management system using Context API and useReducer to manage the state of pet and service cards throughout the application. Along the way, we encountered some challenges—such as limitations in Calendly’s URL parameter support, but we adapted and implemented features that preserved a smooth user experience. We also modularized the reusable components to maintain a scalable and maintainable codebase.
 
 In conclusion, this project successfully brings together a seamless user experience, efficient state management, and an intuitive UI. The dashboard is not only functional but also designed with user in mind. The journey of building this project has been rewarding.
 
 ## Setup:
+
 - 1. Clone the repository
      git clone https://github.com/PeraltaFrian/pet_lovers_paradise.git
 
@@ -32,7 +36,14 @@ Folder Structure:
    /app
    /about
       page.jsx
+   /api/calendly/bookings/
+      route.js
+   /api
+      cat.jsx
    /components
+      Animaltar.jsx
+      Avatar.jsx
+      BookingsList.jsx
       BookingWidgetButton.jsx
       CalBookingModal.jsx
       PetfForm.jsx
@@ -83,7 +94,7 @@ Folder Structure:
 - Tailwind CSS (Utility-First Styling)
 - Heroicons and Lucide-react (icons)
 - Framer Motion (Animation)
-- Calendly (Booking Integration)
+- Calendly (Booking Integration Widget and API)
 - Render(Deployment)
 
 ## Functions:
@@ -94,9 +105,11 @@ Folder Structure:
 3. Submit Feedback or Enquiry via Contact us (Auto populate name and email if user is log-in)
 4. Submit adoption request (Auto populate name and email if user is log-in)
 5. Booking of pet service (Auto populate name and service type)
+6. View all user bookings inside the dashboard.
 
 ## Additional Features:
 - Users are able to book appointments using the animated calendar button (Floating Booking Widget) or by clicking the “Book Now” button under available services.
+- User are able to view all their bookings inside the dashboard with important informations using Calendly API.
 - Centralized state management using React Context API and useReducer.
 - Fully responsive design with smooth animations and interactive icons to enhance the user experience.
 
@@ -117,6 +130,9 @@ Folder Structure:
    - Verify that the Calendly booking modal opens.
    - Confirm that the user’s name and selected service are correctly passed and displayed in Calendly.
    - Test the booking flow: Make a booking -> Confirm receipt of a booking confirmation email -> Attempt rescheduling and cancellation using the email link.
+6. Test view booking function
+   - Afterbooking press "Refresh Bookings" to refresh the bookings table.
+   - After cancellation or reschedule "Refresh Bookings" to refresh the bookings table.
 
 ## State Management
 
