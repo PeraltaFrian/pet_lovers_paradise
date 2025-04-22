@@ -1,63 +1,64 @@
 export async function GET() {
     const CALENDLY_PAT = process.env.CALENDLY_PAT;
-
- 
-    const userRes = await fetch('https://api.calendly.com/users/me', {
-        headers: {
-            Authorization: `Bearer ${CALENDLY_PAT}`,
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (!userRes.ok) {
-        const errorData = await userRes.json();
-        return new Response(
-            JSON.stringify({ error: 'Failed to fetch user URI', details: errorData }),
-            { status: userRes.status }
-        );
-    }
-
-    const userData = await userRes.json();
-    const userUri = userData.resource.uri;
-
-   
-    const eventsUrl = `https://api.calendly.com/scheduled_events?user=${userUri}`;
-    const eventsRes = await fetch(eventsUrl, {
-        headers: {
-            Authorization: `Bearer ${CALENDLY_PAT}`,
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (!eventsRes.ok) {
-        const errorData = await eventsRes.json();
-        return new Response(
-            JSON.stringify({ error: 'Failed to fetch scheduled events', details: errorData }),
-            { status: eventsRes.status }
-        );
-    }
-
-    const eventsData = await eventsRes.json();
-    const events = eventsData.collection;
-
   
-    const detailedEvents = await Promise.all(
-        events.map(async (event) => {
-            const inviteeRes = await fetch(`https://api.calendly.com/scheduled_events/${event.uri.split('/').pop()}/invitees`, {
-                headers: {
-                    Authorization: `Bearer ${CALENDLY_PAT}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const inviteeData = await inviteeRes.json();
-
-            return {
-                ...event,
-                invitees: inviteeData.collection || [],
-            };
+    const headers = {
+      Authorization: `Bearer ${CALENDLY_PAT}`,
+      'Content-Type': 'application/json',
+    };
+  
+    try {
+      // 1. Get current user
+      const userRes = await fetch('https://api.calendly.com/users/me', { headers });
+      const userData = await userRes.json();
+      if (!userRes.ok) {
+        return new Response(JSON.stringify({ error: 'Failed to fetch user URI', details: userData }), {
+          status: userRes.status,
+        });
+      }
+  
+      const userUri = userData.resource.uri;
+  
+      // 2. Fetch ALL scheduled events using pagination
+      let allEvents = [];
+      let nextPage = `https://api.calendly.com/scheduled_events?user=${userUri}&count=100`;
+  
+      while (nextPage) {
+        const eventsRes = await fetch(nextPage, { headers });
+        const eventsData = await eventsRes.json();
+  
+        if (!eventsRes.ok) {
+          return new Response(
+            JSON.stringify({ error: 'Failed to fetch scheduled events', details: eventsData }),
+            { status: eventsRes.status }
+          );
+        }
+  
+        allEvents = allEvents.concat(eventsData.collection);
+        nextPage = eventsData.pagination?.next_page;
+      }
+  
+      // 3. Fetch invitees for each event
+      const detailedEvents = await Promise.all(
+        allEvents.map(async (event) => {
+          const eventId = event.uri.split('/').pop();
+          const inviteeRes = await fetch(`https://api.calendly.com/scheduled_events/${eventId}/invitees`, {
+            headers,
+          });
+  
+          const inviteeData = await inviteeRes.json();
+  
+          return {
+            ...event,
+            invitees: inviteeData.collection || [],
+          };
         })
-    );
-
-    return new Response(JSON.stringify({ events: detailedEvents }), { status: 200 });
-}
+      );
+  
+      return new Response(JSON.stringify({ events: detailedEvents }), { status: 200 });
+    } catch (err) {
+      return new Response(JSON.stringify({ error: 'Unexpected error occurred', details: err.message }), {
+        status: 500,
+      });
+    }
+  }
+  
