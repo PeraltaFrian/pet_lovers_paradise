@@ -6,48 +6,50 @@ import Link from "next/link";
 import Card from "../components/Card";
 import { useAppContext } from "../store";
 import CalBookingModal from "../components/CalBookingModal";
-import BookingWidgetButton from "../components/BookingWidgetButton"; 
+import BookingWidgetButton from "../components/BookingWidgetButton";
+import BookingsList from "../components/BookingsList";
 
 const DashboardPage = () => {
   const { isSignedIn, user } = useUser();
   const { state } = useAppContext();
   const { petCards, serviceCards } = state;
+
   const [showBooking, setShowBooking] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const [refreshMessage, setRefreshMessage] = useState("");
+  const [bookingRefreshToggle, setBookingRefreshToggle] = useState(false); 
+
+  const handleBookingComplete = () => {
+    setShowBooking(false);
+    setBookingRefreshToggle(prev => !prev); 
+  };
+
+  const handleRefresh = () => {
+    setRefreshMessage("Refreshed!");
+    setBookingRefreshToggle(prev => !prev); 
+    setTimeout(() => setRefreshMessage(""), 3000);
+  };
 
   if (!isSignedIn) {
     return (
-      <section>
-        You need to sign in to access this page.
-        <Link href="/sign-in">
+      <section className="text-center mt-10">
+        <p className="text-lg">You need to sign in to access this page.</p>
+        <Link href="/sign-in" className="text-teal-600 underline">
           Sign In
         </Link>
       </section>
     );
   }
 
-  
-  // const petCards = [
-  //   { id: "1", imageSrc: "/assets/dog.jpg", altText: "Max", buttonText: "Know More About Max" },
-  //   { id: "2", imageSrc: "/assets/dog2.jpg", altText: "Bella", buttonText: "Know More About Bella" },
-  //   { id: "3", imageSrc: "/assets/cat.jpg", altText: "Oliver", buttonText: "Know More About Oliver" },
-  //   { id: "4", imageSrc: "/assets/cat2.jpg", altText: "Luna", buttonText: "Know More About Luna" },
-  //   { id: "5", imageSrc: "/assets/rabbit.jpg", altText: "Thumper", buttonText: "Know More About Thumper" },
-  //   { id: "6", imageSrc: "/assets/rabbit2.jpg", altText: "Cinnamon", buttonText: "Know More About Cinnamon" }
-  // ];
-
-
-  // const serviceCards = [
-  //   { imageSrc: "/assets/grooming.jpg", altText: "Pet Grooming", title: "Pet Grooming", description: "Honey's Pet Grooming", buttonText: "Book Now" },
-  //   { imageSrc: "/assets/veterinary.jpg", altText: "Veterinary Services", title: "Veterinary Care", description: "Trusted Veterinary Care", buttonText: "Book Now" },
-  //   { imageSrc: "/assets/petcaregiver.jpg", altText: "Pet Caregiver", title: "Pet Caregiver", description: "Loving Pet Caregiver", buttonText: "Book Now" }
-  // ];
-
   return (
     <main className="flex flex-col items-center justify-center max-w-full py-8">
       <section className="p-4 font-bold my-5 text-center">
         <h1 className="text-3xl font-bold tracking-wide mb-4">
-          Welcome, <span className="text-teal-600">{user?.firstName} {user?.lastName || "Guest"}</span>!
+          Welcome,{" "}
+          <span className="text-teal-600">
+            {user?.firstName} {user?.lastName || "Guest"}
+          </span>
+          !
           <br />
           This is a lovely place for pet lovers!
         </h1>
@@ -72,7 +74,9 @@ const DashboardPage = () => {
       <div className="mt-8"></div>
 
       <section className="text-center mb-8">
-        <h3 className="text-xl font-semibold text-gray-800">Caring for Your Pet’s Health & Beauty</h3>
+        <h3 className="text-xl font-semibold text-gray-800">
+          Caring for Your Pet’s Health & Beauty
+        </h3>
       </section>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
@@ -85,23 +89,37 @@ const DashboardPage = () => {
             description={service.description}
             buttonText={service.buttonText}
             onClick={() => {
-              setSelectedService(service.title); 
-              setShowBooking(true); 
+              setSelectedService(service.title);
+              setShowBooking(true);
             }}
           />
         ))}
       </section>
 
-      {/* Floating Booking Button */}
       <BookingWidgetButton onClick={() => setShowBooking(true)} />
 
-      {/* Modal */}
       {showBooking && (
         <CalBookingModal
           onClose={() => setShowBooking(false)}
-          serviceType={selectedService} 
+          onComplete={handleBookingComplete}
+          serviceType={selectedService}
         />
       )}
+
+      <div className="mt-8 mb-4 w-full max-w-4xl px-4 inline-flex items-center space-x-4">
+        <h3 className="text-xl font-bold text-teal-700">Your Bookings</h3>
+        <button
+          onClick={handleRefresh}
+          className="bg-teal-600 text-white px-6 py-2 rounded hover:bg-teal-700 transition"
+        >
+          🔄 Refresh Bookings
+        </button>
+        {refreshMessage && (
+          <span className="ml-4 text-green-500 font-semibold">{refreshMessage}</span>
+        )}
+      </div>
+
+      <BookingsList refreshTrigger={bookingRefreshToggle} />
     </main>
   );
 };
